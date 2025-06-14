@@ -24,6 +24,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+        "plugins": [
+          [
+            "expo-image-picker",
+            {
+              "cameraPermission": "Appen skal bruge adgang til kameraet for at kunne tage billeder til dine lister."
+            }
+          ]
+        ] 
   }
 }
