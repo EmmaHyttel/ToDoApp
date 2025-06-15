@@ -9,9 +9,7 @@ import ImagePicker from "./ImagePicker";
 function TodoItemModal({ visible, onClose, todo, onDelete }) {
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState(todo.text);
-  const [newImageUri, setNewImageUri] = useState(null);
-
-  const imageUri = todo.image;
+  const [newImageUri, setNewImageUri] = useState(todo.image);
 
   useEffect(() => {
     if (todo) {
@@ -37,10 +35,7 @@ function TodoItemModal({ visible, onClose, todo, onDelete }) {
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modalContainer}>
-        <ImagePicker
-          initialImage={todo.image}
-          onImagePicked={(newImageUri) => setNewImageUri(newImageUri)}
-        />
+        <ImagePicker image={newImageUri} onImagePicked={setNewImageUri} />
         <TextInput
           style={styles.textInput}
           value={inputText}

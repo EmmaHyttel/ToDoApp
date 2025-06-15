@@ -5,25 +5,22 @@ import {
   PermissionStatus,
 } from "expo-image-picker";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-function ImagePicker({onImagePicked, initialImage = null}) {
-  const [pickedImage, setPickedImage] = useState(null);
+function ImagePicker({ image, onImagePicked }) {
   const [cameraPermissionInformation, requestPermission] =
     useCameraPermissions();
 
   useEffect(() => {
-    if (initialImage) {
-    setPickedImage(initialImage);
-    }
-  }, [pickedImage]);
+    console.log("Valgt billede:", image);
+  }, [image]);
 
   async function verifyPermissions() {
     if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
       const permissionResponse = await requestPermission();
-
       return permissionResponse.granted;
     }
+
     if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
       Alert.alert(
         "Du har ikke givet tilladelse til at bruge kameraet.",
@@ -37,7 +34,6 @@ function ImagePicker({onImagePicked, initialImage = null}) {
   async function takeImageHandler() {
     try {
       const hasPermission = await verifyPermissions();
-
       if (!hasPermission) return;
 
       const imageResult = await launchCameraAsync({
@@ -46,28 +42,25 @@ function ImagePicker({onImagePicked, initialImage = null}) {
         quality: 0.5,
       });
 
-      const imageContent = imageResult.assets[0]; // tilgår det første item i assets arrayet fra imageResult
-
-      console.log("Image picker result:", imageResult.assets[0].uri);
-
-      if (!imageContent.canceled && imageContent.uri) {
-        setPickedImage(imageContent.uri);
+      if (!imageResult.canceled && imageResult.assets?.length > 0) {
+        const imageAsset = imageResult.assets[0];
         if (onImagePicked) {
-          onImagePicked(imageContent.uri); // Kald callback-funktionen med den valgte billed-URI
+          onImagePicked(imageAsset.uri); // Sender Uri til parent
         }
+        console.log("Billedet blev taget:", imageAsset.uri);
       } else {
-        console.log("Billedet blev annulleret eller ingen URI fundet.");
+        console.log("Billedet blev annulleret eller ingen assets fundet.");
       }
     } catch (error) {
       console.error("Fejl ved optagelse af billede:", error);
-      Alert.alert("Der opstod en fejl under optagelse af billedet.");
+      Alert.alert("Der opstod en fejl.");
     }
   }
 
   let imagePreview = <Text>Intet billede taget endnu.</Text>;
 
-  if (pickedImage) {
-    imagePreview = <Image style={styles.image} source={{ uri: pickedImage }} />;
+  if (image) {
+    imagePreview = <Image style={styles.image} source={{ uri: image }} />;
   }
 
   return (
