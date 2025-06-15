@@ -34,7 +34,7 @@ function AddTodoModal({ modalIsVisible, onCancel, selectedListId }) {
         text: text.trim(),
         image: imageUri || null,
         completed: false,
-        listId: selectedListId || 1, 
+        listId: selectedListId || 1,
       })
     );
 
@@ -59,7 +59,7 @@ function AddTodoModal({ modalIsVisible, onCancel, selectedListId }) {
 
             <View style={styles.buttonContainer}>
               <View style={styles.button}>
-                <Button title="Afbryd" onPress={onCancel} color="#f31282" />
+                <Button title="Annuller" onPress={onCancel} color="#f31282" />
               </View>
               <View style={styles.button}>
                 <Button

@@ -60,8 +60,6 @@ function TodoListScreen() {
 
   return (
     <View style={styles.container}>
-      <Button title="Tilføj to-do" onPress={startAddTodoHandler} />
-
       <AddTodoModal
         modalIsVisible={modalIsVisible}
         onCancel={endAddTodoHandler}
@@ -88,7 +86,7 @@ function TodoListScreen() {
       <View style={styles.buttonContainer}>
         <MyIconButton
           icon="add"
-          size={32}
+          size={40}
           onPress={startAddTodoHandler}
           style={{ position: "absolute", bottom: 16, right: 16 }}
         />
