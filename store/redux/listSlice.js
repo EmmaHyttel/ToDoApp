@@ -7,11 +7,10 @@ const listSlice = createSlice({
   },
   reducers: {
     addList(state, action) {
-      const { id, title, items } = action.payload || {};
+      const { id, title } = action.payload || {};
       state.lists.push({
         id,
         title: title.trim(),
-        items: items || [],
       });
     },
     removeList(state, action) {
