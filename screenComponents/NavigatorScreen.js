@@ -25,15 +25,12 @@ function NavigatorScreen() {
           />
         )}
       >
-        <Drawer.Screen name="To-do">
-          {(props) => (
-            <TodoListScreen
-              {...props}
-              items={courseGoals}
-              setCourseGoals={setCourseGoals}
-            />
-          )}
-        </Drawer.Screen>
+        <Drawer.Screen
+          name="To-do"
+          key={1}
+          component={TodoListScreen}
+          initialParams={{ listId: 1 }}
+        ></Drawer.Screen>
         {lists.map((list) => (
           <Drawer.Screen
             key={list.id}

@@ -11,7 +11,7 @@ import MyIconButton from "../components/MyIconButton";
 
 import "react-native-get-random-values";
 
-function TodoListScreen(props) {
+function TodoListScreen() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [editModalIsVisible, setEditModalIsVisible] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState(null);
@@ -20,6 +20,7 @@ function TodoListScreen(props) {
 
   const { listId } = route.params || 1;
 
+  console.log("List ID:", listId);
   const items = useSelector((state) =>
     state.todos.todos.filter((todo) => todo.listId === listId)
   );
