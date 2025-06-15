@@ -28,12 +28,15 @@ const todoSlice = createSlice({
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
     updateTodo(state, action) {
-      const { id, updatedText } = action.payload;
+      const { id, updatedText, updatedUri } = action.payload;
 
-      const todoIndex = state.todos.findIndex((todo) => todo.id === id);
+      const todo = state.todos.find((todo) => todo.id === id);
 
-      if (todoIndex !== -1) {
-        state.todos[todoIndex].text = updatedText;
+      if (todo) {
+        todo.text = updatedText;
+        if (updatedUri !== undefined) {
+          todo.image = updatedUri;
+        }
       }
     },
     toggleCompleteTodo(state, action) {
