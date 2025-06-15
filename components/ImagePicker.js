@@ -7,13 +7,15 @@ import {
 
 import { useEffect, useState } from "react";
 
-function ImagePicker({onImagePicked}) {
-  const [pickedImage, setPickedImage] = useState();
+function ImagePicker({onImagePicked, initialImage = null}) {
+  const [pickedImage, setPickedImage] = useState(null);
   const [cameraPermissionInformation, requestPermission] =
     useCameraPermissions();
 
   useEffect(() => {
-    console.log("Opdateret valgt billlede URI:", pickedImage);
+    if (initialImage) {
+    setPickedImage(initialImage);
+    }
   }, [pickedImage]);
 
   async function verifyPermissions() {

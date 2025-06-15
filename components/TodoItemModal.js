@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateTodo } from "../store/redux/todoSlice";
-import {
-  View,
-  Modal,
-  Button,
-  StyleSheet,
-  TextInput,
-  Image,
-  Text,
-} from "react-native";
+import { View, Modal, Button, StyleSheet, TextInput } from "react-native";
 
 import ConfirmDelete from "./ConfirmDelete";
 import ImagePicker from "./ImagePicker";
@@ -32,21 +24,23 @@ function TodoItemModal({ visible, onClose, todo, onDelete }) {
       console.log("Ingen tekst angivet, afbryder opdatering.");
       return;
     }
-    dispatch(updateTodo({ id: todo.id, updatedText: inputText.trim(), imageUri: newImageUri }));
+    dispatch(
+      updateTodo({
+        id: todo.id,
+        updatedText: inputText.trim(),
+        updatedUri: newImageUri,
+      })
+    );
     onClose();
-  }
-
-  let imagePreview = <Text>Intet billede taget endnu.</Text>;
-
-  if (todo.image !== null) {
-    imagePreview = <Image style={styles.image} source={{ uri: imageUri }} />;
   }
 
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modalContainer}>
-        <View style={styles.imagePreview}>{imagePreview}</View>
-        <ImagePicker onImagePicked={setNewImageUri}/>
+        <ImagePicker
+          initialImage={todo.image}
+          onImagePicked={(newImageUri) => setNewImageUri(newImageUri)}
+        />
         <TextInput
           style={styles.textInput}
           value={inputText}

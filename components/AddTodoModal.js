@@ -54,7 +54,7 @@ function AddTodoModal({ modalIsVisible, onCancel }) {
 
             <TodoInput value={text} onChangeText={setText} />
 
-            <ImagePicker onImagePicked={setImageUri} />
+            <ImagePicker onImagePicked={(imageUri) => setImageUri(imageUri)} />
 
             <View style={styles.buttonContainer}>
               <View style={styles.button}>
