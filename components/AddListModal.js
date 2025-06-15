@@ -10,18 +10,19 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 import { addList } from "../store/redux/listSlice";
 
 function AddListModal({ visible, onClose }) {
-  const [listName, setListName] = useState("");
+  const [listTitle, setListTitle] = useState("");
   const dispatch = useDispatch();
 
   function handleAddList() {
     const trimmed = listTitle.trim();
     if (!trimmed) return;
 
-    dispatch(addList(trimmed));
+    dispatch(addList({ id: uuidv4(), title: trimmed }));
     setListTitle("");
     onClose();
   }
@@ -35,8 +36,8 @@ function AddListModal({ visible, onClose }) {
             <TextInput
               style={styles.input}
               placeholder="Navn på liste"
-              value={listName}
-              onChangeText={setListName}
+              value={listTitle}
+              onChangeText={setListTitle}
             />
             <View>
               <Button title="Annuller" color="#888" onPress={onClose} />
@@ -70,11 +71,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   input: {
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
-    marginBottom: 20,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderColor: "#c9a0ff",
+    backgroundColor: "#f3e8ff",
+    color: "#120438",
+    borderRadius: 8,
+    width: "100%",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   buttonRow: {
     flexDirection: "row",

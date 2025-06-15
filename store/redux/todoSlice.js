@@ -15,7 +15,7 @@ const todoSlice = createSlice({
         console.log("Ingen tekst angivet, afbryder tilføjelse.");
         return;
       }
-
+      console.log("listId", listId);
       state.todos.push({
         id,
         text: trimmedText,

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRoute } from "@react-navigation/native";
 import { View, StyleSheet, FlatList, Button } from "react-native";
 
 import { useSelector } from "react-redux";
@@ -10,12 +11,18 @@ import MyIconButton from "../components/MyIconButton";
 
 import "react-native-get-random-values";
 
-function TodoListScreen() {
+function TodoListScreen(props) {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [editModalIsVisible, setEditModalIsVisible] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState(null);
 
-  const items = useSelector((state) => state.todos.todos);
+  const route = useRoute();
+
+  const { listId } = route.params || 1;
+
+  const items = useSelector((state) =>
+    state.todos.todos.filter((todo) => todo.listId === listId)
+  );
 
   function startAddTodoHandler() {
     setModalIsVisible(true);
@@ -57,6 +64,7 @@ function TodoListScreen() {
       <AddTodoModal
         modalIsVisible={modalIsVisible}
         onCancel={endAddTodoHandler}
+        selectedListId={listId}
       />
       {selectedTodo && (
         <TodoItemModal

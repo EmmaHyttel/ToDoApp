@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 import TodoInput from "./TodoInput";
 import ImagePicker from "./ImagePicker";
 
-function AddTodoModal({ modalIsVisible, onCancel }) {
+function AddTodoModal({ modalIsVisible, onCancel, selectedListId }) {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [imageUri, setImageUri] = useState(null);
@@ -34,6 +34,7 @@ function AddTodoModal({ modalIsVisible, onCancel }) {
         text: text.trim(),
         image: imageUri || null,
         completed: false,
+        listId: selectedListId || 1, 
       })
     );
 
